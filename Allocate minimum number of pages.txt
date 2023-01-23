@@ -1,0 +1,87 @@
+class Solution
+{
+public:
+//Function to find minimum number of pages.
+bool ispossible(int A[], int N, int M, int mid)
+{
+int student = 1;
+int total_sum = 0;
+for(int i = 0; i < N; i++)
+{
+if(total_sum + A[i] <= mid )
+{
+total_sum = total_sum + A[i];
+}
+else
+{
+student++;
+if(student > M || A[i] > mid)
+{
+return false;
+}
+total_sum = 0;
+total_sum = total_sum + A[i];
+}
+if(student > M)
+{
+return false;
+}
+}
+return true;
+}
+int findPages(int A[], int N, int M)
+{
+int start = 0;
+int sum = 0;
+for(int i = 0; i < N; i++)
+{
+sum = sum + A[i];
+}
+
+int end = sum;
+int mid = start + (end - start)/2;
+int ans = -1;
+if(M > N)
+{
+return ans;
+}
+while(start <= end)
+{
+if(ispossible(A,N,M,mid))
+{
+ans = mid;
+end = mid - 1;
+}
+else
+{
+
+start = mid + 1;
+}
+mid = start + (end - start)/2;
+}
+return ans;
+
+}
+};
+
+//{
+
+int main() {
+int t;
+cin>>t;
+while(t--){
+int n;
+cin>>n;
+int A[n];
+for(int i=0;i<n;i++){
+cin>>A[i];
+}
+int m;
+cin>>m;
+Solution ob;
+cout << ob.findPages(A, n, m) << endl;
+}
+return 0;
+}
+
+// } Driver Code Ends
